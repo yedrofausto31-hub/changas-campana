@@ -181,7 +181,7 @@ export default function ChangasCampana() {
     } catch (error) {
       console.error('Error cargando localStorage:', error);
       setChangas([]);
-    } fontally {
+    } finally {
       setIsLoaded(true);
     }
   }, []);
