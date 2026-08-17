@@ -1390,6 +1390,7 @@ export default function ChangasCampana() {
                 value={editEmail}
                 onChange={(e) => setEditEmail(e.target.value)}
                 className="w-full border border-slate-200 rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                autoCapitalize="none" autoCorrect="off" spellCheck={false}
               />
             </div>
 
