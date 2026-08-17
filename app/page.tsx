@@ -1390,7 +1390,6 @@ export default function ChangasCampana() {
                 value={editEmail}
                 onChange={(e) => setEditEmail(e.target.value)}
                 className="w-full border border-slate-200 rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                autoCapitalize="none" autoCorrect="off" spellCheck={false}
               />
             </div>
 
@@ -2051,7 +2050,10 @@ export default function ChangasCampana() {
               >
                 CANCELAR
               </button>
-              <button type="submit" className="w-full text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl active:scale-95 transition-all shadow-md">
+              <button
+                type="submit"
+                className="w-full text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl active:scale-95 transition-all shadow-md"
+              >
                 INGRESAR
               </button>
             </div>
@@ -2059,70 +2061,83 @@ export default function ChangasCampana() {
         </div>
       )}
 
-      {/* MODAL AJUSTES */}
+      {/* MODAL AJUSTES / MI PERFIL */}
       {modalAjustes && usuario && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto">
-          <div className="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 space-y-4 shadow-2xl text-center border border-slate-100 my-auto">
-            <h3 className="font-black text-lg sm:text-xl text-slate-900">Mi Cuenta</h3>
-
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src={usuario.avatar}
-                alt="Foto"
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-slate-900 shadow-md"
-              />
-              <label className="cursor-pointer text-xs font-bold text-blue-600 hover:underline">
-                Cambiar foto
-                <input type="file" accept="image/*" onChange={handleCambiarAvatar} className="hidden" />
-              </label>
+          <div className="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 space-y-4 shadow-2xl border border-slate-100 my-auto">
+            <div className="flex justify-between items-center border-b pb-3">
+              <h3 className="font-black text-lg sm:text-xl text-slate-900 flex items-center gap-2">
+                <span>⚙️</span> Mi Perfil
+              </h3>
+              <button
+                onClick={() => setModalAjustes(false)}
+                className="text-slate-400 font-bold hover:text-slate-600 rounded-full w-7 h-7 flex items-center justify-center"
+              >
+                ✕
+              </button>
             </div>
 
-            <div className="text-left bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 text-xs space-y-1.5">
-              <p className="truncate"><strong>Nombre:</strong> {usuario.nombre}</p>
-              <p className="truncate"><strong>Email:</strong> {usuario.email}</p>
-              <p className="truncate"><strong>Barrio:</strong> {usuario.barrio}</p>
+            <div className="flex flex-col items-center gap-3 py-2">
+              <div className="relative group">
+                <img
+                  src={usuario.avatar}
+                  alt={usuario.nombre}
+                  className="w-20 h-20 rounded-full object-cover border-4 border-slate-100 shadow-md"
+                />
+                <label className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-500 text-white p-1.5 rounded-full cursor-pointer shadow-md transition-transform active:scale-90">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCambiarAvatar}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+              <div className="text-center">
+                <h4 className="font-black text-slate-900 text-base">{usuario.nombre}</h4>
+                <p className="text-xs text-slate-500">{usuario.email}</p>
+              </div>
+            </div>
+
+            <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-2 text-xs">
+              <div className="flex justify-between items-center">
+                <span className="font-bold text-slate-500">Barrio:</span>
+                <span className="font-semibold text-slate-800">{usuario.barrio || 'Centro'}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="font-bold text-slate-500">Nacimiento:</span>
+                <span className="font-semibold text-slate-800">{usuario.fechaNac || '-'}</span>
+              </div>
             </div>
 
             <div className="space-y-2 pt-2">
-              {esAdmin && (
-                <button
-                  onClick={() => {
-                    setModalAjustes(false);
-                    setModalAdminPanel(true);
-                  }}
-                  className="w-full text-xs font-bold bg-red-600 hover:bg-red-700 active:scale-95 text-white py-3 rounded-2xl transition-all shadow-md"
-                >
-                  🛡️ ABRIR PANEL DE ADMINISTRADOR
-                </button>
-              )}
-              <button
-                onClick={() => {
-                  setModalAjustes(false);
-                  setModalMisPublicaciones(true);
-                }}
-                className="w-full text-xs font-bold bg-blue-50 border border-blue-200 text-blue-700 py-3 rounded-2xl hover:bg-blue-100 active:scale-95 transition-all"
-              >
-                📋 MIS PUBLICACIONES ({misPublicaciones.length})
-              </button>
               <button
                 onClick={handleCerrarSesion}
-                className="w-full text-xs font-bold border border-red-200 bg-red-50 text-red-600 py-3 rounded-2xl hover:bg-red-100 active:scale-95 transition-all"
+                className="w-full text-xs font-bold bg-red-50 text-red-600 border border-red-200 py-3 rounded-2xl hover:bg-red-100 active:scale-95 transition-all"
               >
                 CERRAR SESIÓN
               </button>
               <button
                 onClick={() => setModalAjustes(false)}
-                className="w-full text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-2xl transition-all shadow-md active:scale-95"
+                className="w-full text-xs font-bold border border-slate-300 py-3 rounded-2xl text-slate-600 hover:bg-slate-50 transition-colors"
               >
-                CERRAR
+                VOLVER
               </button>
             </div>
           </div>
         </div>
       )}
 
-      <footer className="bg-slate-950 text-slate-400 py-6 sm:py-8 text-center text-xs mt-auto border-t border-slate-800">
-        Changas Campana © 2026 - Conectando a la comunidad local.
+      {/* FOOTER */}
+      <footer className="bg-slate-900 text-slate-400 py-6 mt-12 border-t border-slate-800 text-center text-xs">
+        <div className="max-w-7xl mx-auto px-4 space-y-2">
+          <p className="font-bold text-slate-300">CHANGAS CAMPANA &copy; {new Date().getFullYear()} - Todos los derechos reservados</p>
+          <p className="text-slate-500 text-[11px]">Plataforma comunitaria de anuncios y ofertas laborales para la ciudad de Campana, Buenos Aires.</p>
+        </div>
       </footer>
     </div>
   );
