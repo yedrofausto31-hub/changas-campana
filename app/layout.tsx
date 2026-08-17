@@ -1,21 +1,35 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: 'Changas Campana',
-  description: 'Plataforma comunitaria de trabajos y servicios en Campana',
-}
+  title: "Changas Campana",
+  description: "Portal local de trabajos y servicios en Campana",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body className="antialiased bg-slate-100 text-slate-900">
+    <html
+      lang="es"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col bg-slate-100 text-slate-900 selection:bg-blue-600 selection:text-white">
         {children}
       </body>
     </html>
-  )
+  );
 }
